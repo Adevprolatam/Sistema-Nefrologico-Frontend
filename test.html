@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Selección Múltiple con Listas</title>
+    <style>
+        .selected-options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .selected-options li {
+            padding: 5px 10px;
+            background-color: lightgrey;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>¿Qué te gusta comer?</h2>
+<select id="food-options" multiple>
+    <option value="manzana">Manzana</option>
+    <option value="pera">Pera</option>
+    <option value="uva">Uva</option>
+    <option value="naranja">Naranja</option>
+    <option value="plátano">Plátano</option>
+</select>
+
+<h3>Opciones seleccionadas:</h3>
+<ul id="selected-options" class="selected-options"></ul>
+
+<script>
+    const foodSelect = document.getElementById('food-options');
+    const selectedOptionsContainer = document.getElementById('selected-options');
+    let selectedFoods = []; // Array para almacenar las opciones seleccionadas
+
+    foodSelect.addEventListener('change', updateSelectedOptions);
+
+    function updateSelectedOptions() {
+        const selectedValue = foodSelect.value;
+
+        if (!selectedFoods.includes(selectedValue)) {
+            selectedFoods.push(selectedValue);
+            renderSelectedOptions();
+        }
+    }
+
+    function renderSelectedOptions() {
+        selectedOptionsContainer.innerHTML = '';
+        selectedFoods.forEach(value => {
+            const li = document.createElement('li');
+            li.textContent = value;
+            li.addEventListener('click', () => {
+                const index = selectedFoods.indexOf(value);
+                if (index !== -1) {
+                    selectedFoods.splice(index, 1);
+                    renderSelectedOptions();
+                }
+            });
+            selectedOptionsContainer.appendChild(li);
+        });
+    }
+</script>
+
+</body>
+</html>
